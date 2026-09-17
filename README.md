@@ -4,7 +4,7 @@ A dark Omarchy theme of cool obsidian, warm parchment, sovereign gold, and restr
 
 ![Gilt desktop screenshot](screenshot.png)
 
-Black stone and charcoal architecture set the scene, with parchment and ivory lettering kept clear against the dark. Selective gold metalwork takes the lead, while copper, jade, verdigris, lapis, amethyst, and bronze remain quieter accents across the architecture and terminal palette. The wallpapers and unlock screen extend that material hierarchy into a private study after dusk, composed and unmistakably luxurious.
+Black stone and charcoal architecture, with parchment and ivory lettering kept clear against the dark. Accented by gold metalwork, with copper, jade, verdigris, lapis, amethyst, and bronze as quieter selective touches.
 
 ![Gilt preview](preview.png)
 
