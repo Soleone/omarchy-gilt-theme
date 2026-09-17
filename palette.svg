@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="500" viewBox="0 0 1000 500" role="img" aria-labelledby="title desc">
+  <title id="title">Gilt theme palette</title>
+  <desc id="desc">The Gilt theme palette, organized into core colors, neutral tones, and terminal colors.</desc>
+  <rect width="1000" height="500" rx="18" fill="#050607"/>
+  <g font-family="Inter, ui-sans-serif, system-ui, sans-serif">
+    <text x="36" y="40" fill="#F5EBD2" font-size="23" font-weight="700">Gilt palette</text>
+    <text x="36" y="64" fill="#716957" font-size="13">Cool obsidian, warm parchment, sovereign gold, and restrained jewel tones</text>
+
+    <text x="36" y="101" fill="#D8D1C0" font-size="12" font-weight="700" letter-spacing="1.5">CORE</text>
+    <g transform="translate(36 114)">
+      <g><rect width="108" height="58" rx="8" fill="#D4AF37"/><text x="8" y="78" fill="#D8D1C0" font-size="11">Sovereign gold</text><text x="8" y="95" fill="#A79F8D" font-size="10">Accent</text></g>
+      <g transform="translate(116)"><rect width="108" height="58" rx="8" fill="#342D1B" stroke="#716957"/><text x="8" y="78" fill="#D8D1C0" font-size="11">Gold in shadow</text><text x="8" y="95" fill="#A79F8D" font-size="10">Selection</text></g>
+      <g transform="translate(232)"><rect width="108" height="58" rx="8" fill="#716957"/><text x="8" y="78" fill="#D8D1C0" font-size="11">Dusty taupe</text><text x="8" y="95" fill="#A79F8D" font-size="10">Muted</text></g>
+    </g>
+
+    <text x="36" y="235" fill="#D8D1C0" font-size="12" font-weight="700" letter-spacing="1.5">NEUTRALS</text>
+    <g transform="translate(36 248)">
+      <g><rect width="108" height="58" rx="8" fill="#0D0F12" stroke="#716957"/><text x="8" y="78" fill="#D8D1C0" font-size="11">Obsidian</text><text x="8" y="95" fill="#A79F8D" font-size="10">Background</text></g>
+      <g transform="translate(116)"><rect width="108" height="58" rx="8" fill="#090A0C" stroke="#716957"/><text x="8" y="78" fill="#D8D1C0" font-size="11">Shadow stone</text><text x="8" y="95" fill="#A79F8D" font-size="10">Dark Background</text></g>
+      <g transform="translate(232)"><rect width="108" height="58" rx="8" fill="#050607" stroke="#716957"/><text x="8" y="78" fill="#D8D1C0" font-size="11">Deep obsidian</text><text x="8" y="95" fill="#A79F8D" font-size="10">Darker Background</text></g>
+      <g transform="translate(348)"><rect width="108" height="58" rx="8" fill="#181B20"/><text x="8" y="78" fill="#D8D1C0" font-size="11">Raised stone</text><text x="8" y="95" fill="#A79F8D" font-size="10">Lighter Background</text></g>
+      <g transform="translate(464)"><rect width="108" height="58" rx="8" fill="#7B7465"/><text x="8" y="78" fill="#D8D1C0" font-size="11">Dusty parchment</text><text x="8" y="95" fill="#A79F8D" font-size="10">Dark Foreground</text></g>
+      <g transform="translate(580)"><rect width="108" height="58" rx="8" fill="#D8D1C0"/><text x="8" y="78" fill="#D8D1C0" font-size="11">Parchment</text><text x="8" y="95" fill="#A79F8D" font-size="10">Foreground</text></g>
+      <g transform="translate(696)"><rect width="108" height="58" rx="8" fill="#E6DECB"/><text x="8" y="78" fill="#D8D1C0" font-size="11">Light parchment</text><text x="8" y="95" fill="#A79F8D" font-size="10">Light Foreground</text></g>
+      <g transform="translate(812)"><rect width="108" height="58" rx="8" fill="#F5EBD2"/><text x="8" y="78" fill="#D8D1C0" font-size="11">Bright ivory</text><text x="8" y="95" fill="#A79F8D" font-size="10">Bright Foreground</text></g>
+    </g>
+
+    <text x="36" y="369" fill="#D8D1C0" font-size="12" font-weight="700" letter-spacing="1.5">COLORS</text>
+    <g transform="translate(36 382)">
+      <g><rect width="108" height="58" rx="8" fill="#BC6060"/><text x="8" y="78" fill="#D8D1C0" font-size="11">Oxblood</text><text x="8" y="95" fill="#A79F8D" font-size="10">Red</text></g>
+      <g transform="translate(116)"><rect width="108" height="58" rx="8" fill="#D4AF37"/><text x="8" y="78" fill="#D8D1C0" font-size="11">Sovereign gold</text><text x="8" y="95" fill="#A79F8D" font-size="10">Yellow</text></g>
+      <g transform="translate(232)"><rect width="108" height="58" rx="8" fill="#C27B48"/><text x="8" y="78" fill="#D8D1C0" font-size="11">Copper</text><text x="8" y="95" fill="#A79F8D" font-size="10">Orange</text></g>
+      <g transform="translate(348)"><rect width="108" height="58" rx="8" fill="#7FA37A"/><text x="8" y="78" fill="#D8D1C0" font-size="11">Jade</text><text x="8" y="95" fill="#A79F8D" font-size="10">Green</text></g>
+      <g transform="translate(464)"><rect width="108" height="58" rx="8" fill="#72A5A4"/><text x="8" y="78" fill="#D8D1C0" font-size="11">Verdigris</text><text x="8" y="95" fill="#A79F8D" font-size="10">Cyan</text></g>
+      <g transform="translate(580)"><rect width="108" height="58" rx="8" fill="#6F8FAF"/><text x="8" y="78" fill="#D8D1C0" font-size="11">Lapis</text><text x="8" y="95" fill="#A79F8D" font-size="10">Blue</text></g>
+      <g transform="translate(696)"><rect width="108" height="58" rx="8" fill="#9A7AA0"/><text x="8" y="78" fill="#D8D1C0" font-size="11">Amethyst</text><text x="8" y="95" fill="#A79F8D" font-size="10">Magenta</text></g>
+      <g transform="translate(812)"><rect width="108" height="58" rx="8" fill="#8A6240"/><text x="8" y="78" fill="#D8D1C0" font-size="11">Bronze</text><text x="8" y="95" fill="#A79F8D" font-size="10">Brown</text></g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,39 @@
+mode = "dark"
+
+# Sovereign gold on cool obsidian
+accent = "#D4AF37"
+selection = "#342D1B"
+muted = "#716957"
+
+# Obsidian neutral ramp
+background = "#0D0F12"
+dark_background = "#090A0C"
+darker_background = "#050607"
+lighter_background = "#181B20"
+
+# Parchment foreground ramp
+foreground = "#D8D1C0"
+dark_foreground = "#7B7465"
+light_foreground = "#E6DECB"
+bright_foreground = "#F5EBD2"
+
+# A restrained jewel-box ANSI palette
+red = "#BC6060"
+yellow = "#D4AF37"
+orange = "#C27B48"
+green = "#7FA37A"
+cyan = "#72A5A4"
+blue = "#6F8FAF"
+magenta = "#9A7AA0"
+brown = "#8A6240"
+
+bright_red = "#D47474"
+bright_yellow = "#E7C968"
+bright_green = "#9DBB8E"
+bright_cyan = "#91C0BD"
+bright_blue = "#8FAECC"
+bright_magenta = "#B596B8"
+
+# Champagne, sovereign gold, and old bronze create a metallic active edge.
+hyprland_active_border = "rgba(f4e6a6ee) rgba(d4af37ee) rgba(7a551eee) 115deg"
+hyprland_inactive_border = "rgba(4f4a3faa)"
