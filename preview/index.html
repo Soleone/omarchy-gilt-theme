@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gilt for Omarchy</title>
+<meta name="description" content="Preview Gilt, a dark Omarchy theme of obsidian, parchment and sovereign gold, with its seven wallpapers and unlock screen.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%230D0F12'/%3E%3Crect x='3' y='3' width='10' height='10' fill='none' stroke='%23D4AF37' stroke-width='2'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  /* Fallbacks only: every color is replaced at load from the theme's own colors.toml. */
+  :root {
+    --accent: #D4AF37; --selection: #342D1B; --muted: #716957;
+    --background: #0D0F12; --dark_background: #090A0C; --darker_background: #050607; --lighter_background: #181B20;
+    --foreground: #D8D1C0; --dark_foreground: #7B7465; --light_foreground: #E6DECB; --bright_foreground: #F5EBD2;
+    --red: #BC6060; --yellow: #D4AF37; --orange: #C27B48; --green: #7FA37A; --cyan: #72A5A4; --blue: #6F8FAF; --magenta: #9A7AA0; --brown: #8A6240;
+    --bright_red: #D47474; --bright_yellow: #E7C968; --bright_green: #9DBB8E; --bright_cyan: #91C0BD; --bright_blue: #8FAECC; --bright_magenta: #B596B8;
+    --active_border: linear-gradient(115deg, #f4e6a6ee, #d4af37ee, #7a551eee);
+    --inactive_border: #4f4a3faa;
+    --mono: "JetBrains Mono", ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body { background: var(--darker_background); color: var(--foreground); font: 14px/1.5 var(--mono); overflow: hidden; }
+
+  /* The desktop is drawn at 1920x1080 and scaled to fit, like a screenshot you can use. */
+  #viewport { position: fixed; inset: 0 0 64px; overflow: hidden; }
+  #stage { position: absolute; left: 50%; top: 50%; width: 1920px; height: 1080px; transform-origin: center; overflow: hidden; background: var(--background); }
+  .wall { position: absolute; inset: 0; background: center / cover no-repeat; transition: opacity 900ms ease; }
+
+  #bar { position: absolute; inset: 0 0 auto; height: 26px; display: flex; align-items: center; justify-content: space-between; padding: 0 12px; background: var(--background); color: var(--foreground); font-size: 13px; z-index: 2; }
+  #bar .side { display: flex; align-items: center; gap: 14px; }
+  #bar .ws { color: var(--dark_foreground); cursor: pointer; }
+  #bar .ws.on { color: var(--foreground); }
+  #bar .ws.on::before { content: ""; display: inline-block; width: 9px; height: 9px; background: var(--foreground); border-radius: 2px; }
+  #bar .ws.on span { display: none; }
+  #bar svg { width: 15px; height: 15px; stroke: var(--foreground); fill: none; stroke-width: 1.6; display: block; }
+  #clock { position: absolute; left: 50%; transform: translateX(-50%); }
+
+  .win { position: absolute; padding: 2px; background: var(--inactive_border); cursor: default; }
+  .win.on { background: var(--active_border); }
+  .win > .body { height: 100%; background: color-mix(in srgb, var(--background) 96%, transparent); overflow: hidden; padding: 14px 18px; white-space: pre; font-size: 15px; line-height: 1.55; }
+
+  /* Neovim */
+  #nvim .body { padding: 14px 0 0; display: flex; flex-direction: column; }
+  #nvim .code { flex: 1; min-height: 0; overflow: hidden; margin-bottom: 8px; }
+  .ln { display: flex; }
+  .ln .n { width: 60px; padding-right: 22px; text-align: right; color: var(--dark_foreground); flex: none; }
+  .ln.cur { background: var(--lighter_background); }
+  .ln.cur .n { color: var(--accent); font-weight: 700; }
+  .kw { color: var(--magenta); font-style: italic; }
+  .str { color: var(--green); }
+  .num { color: var(--orange); }
+  .fn { color: var(--blue); }
+  .ty { color: var(--accent); }
+  .prop { color: var(--cyan); }
+  .com { color: var(--muted); font-style: italic; }
+  .pun { color: var(--dark_foreground); }
+  .cursor { background: var(--bright_foreground); color: var(--background); animation: blink 1.1s steps(1) infinite; }
+  @keyframes blink { 50% { background: transparent; color: inherit; } }
+  .status { display: flex; align-items: center; gap: 0; margin: 0 18px 10px; color: var(--foreground); }
+  .status .mode { background: var(--accent); color: var(--background); font-weight: 700; padding: 0 12px; }
+  .status .mode::after { content: ""; }
+  .status .file { padding: 0 14px; color: var(--foreground); }
+  .status .fill { flex: 1; }
+  .status .pos { padding: 0 12px; color: var(--accent); }
+  .status .time { background: var(--accent); color: var(--background); padding: 0 12px; font-weight: 700; }
+
+  /* Terminals */
+  .seg { display: inline-block; padding: 0 10px; }
+  .seg.path { background: var(--light_foreground); color: var(--background); }
+  .seg.git { background: var(--orange); color: var(--background); }
+  .b { font-weight: 700; }
+  .c-red { color: var(--red); } .c-green { color: var(--green); } .c-yellow { color: var(--yellow); } .c-blue { color: var(--blue); }
+  .c-cyan { color: var(--cyan); } .c-muted { color: var(--dark_foreground); } .c-bright { color: var(--bright_foreground); }
+  .swatches { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px 14px; margin-top: 10px; white-space: normal; }
+  .sw { display: flex; align-items: center; gap: 10px; font-size: 13px; }
+  .sw i { width: 30px; height: 30px; flex: none; border: 1px solid #ffffff14; }
+  .sw small { display: block; color: var(--dark_foreground); font-size: 12px; }
+
+  /* Unlock screen */
+  #lock { position: absolute; inset: 0; z-index: 5; display: grid; place-items: center; opacity: 0; pointer-events: none; transition: opacity 500ms ease;
+    background: radial-gradient(circle at 50% 46%, color-mix(in srgb, var(--lighter_background) 70%, var(--background)) 0, var(--background) 45%, var(--darker_background) 100%); }
+  #lock.on { opacity: 1; pointer-events: auto; cursor: pointer; }
+  #lock .ring { position: absolute; left: 50%; top: 46%; width: 600px; height: 600px; transform: translate(-50%, -50%); border: 1px solid color-mix(in srgb, var(--accent) 14%, transparent); border-radius: 50%; }
+  #lock .ring::after { content: ""; position: absolute; inset: 32px; border: 1px solid color-mix(in srgb, var(--accent) 10%, transparent); border-radius: 50%; }
+  #lock .corner { position: absolute; width: 96px; height: 96px; border: 2px solid color-mix(in srgb, var(--accent) 24%, transparent); }
+  #lock .corner.tl { left: 78px; top: 78px; border-right: 0; border-bottom: 0; } #lock .corner.tr { right: 78px; top: 78px; border-left: 0; border-bottom: 0; }
+  #lock .corner.bl { left: 78px; bottom: 78px; border-right: 0; border-top: 0; } #lock .corner.br { right: 78px; bottom: 78px; border-left: 0; border-top: 0; }
+  #lock .inner { position: relative; display: grid; justify-items: center; gap: 84px; margin-top: -40px; }
+  #lock img { width: 800px; image-rendering: pixelated; }
+  #lock .field { display: flex; align-items: center; gap: 22px; }
+  #lock .field svg { width: 36px; height: 44px; stroke: var(--foreground); fill: none; stroke-width: 3; }
+  #lock .input { width: 326px; height: 54px; border: 2px solid var(--accent); background: var(--darker_background); display: flex; align-items: center; gap: 8px; padding: 0 28px; }
+  #lock .input i { width: 10px; height: 10px; border-radius: 50%; background: var(--foreground); }
+  #lock .label { position: absolute; bottom: 104px; left: 50%; transform: translateX(-50%); letter-spacing: 0.6em; font-size: 13px; color: var(--dark_foreground); }
+
+  /* Controls, at normal size below the scaled desktop */
+  #controls { position: fixed; inset: auto 0 0; height: 64px; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 0 16px; background: var(--darker_background); border-top: 1px solid var(--lighter_background); flex-wrap: wrap; }
+  #controls button, #controls a { font: 13px var(--mono); color: var(--foreground); background: var(--lighter_background); border: 1px solid #ffffff12; padding: 7px 12px; cursor: pointer; text-decoration: none; white-space: nowrap; }
+  #controls button:hover, #controls a:hover { border-color: var(--accent); color: var(--bright_foreground); }
+  #controls .title { color: var(--accent); font-weight: 700; margin-right: 6px; }
+  #controls #wallname { min-width: 210px; text-align: center; color: var(--light_foreground); }
+  #controls kbd { font: inherit; color: var(--dark_foreground); }
+  @media (max-width: 720px) {
+    #viewport { inset: 0 0 128px; }
+    #controls { height: 128px; align-content: center; }
+    #controls .title, #controls kbd { display: none; }
+    #controls #wallname { min-width: 0; flex: 1 1 auto; }
+    #controls #prev, #controls #wallname, #controls #next { order: -1; }
+    #controls #lockbtn { margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+<div id="viewport">
+  <div id="stage">
+    <div class="wall" id="wallA"></div>
+    <div class="wall" id="wallB" style="opacity:0"></div>
+
+    <div id="bar">
+      <div class="side">
+        <svg viewBox="0 0 16 16"><rect x="2.5" y="2.5" width="11" height="11"/><path d="M5.5 5.5h5v5h-5z"/></svg>
+        <span class="ws on" data-ws="1"><span>1</span></span><span class="ws" data-ws="2">2</span><span class="ws" data-ws="3">3</span><span class="ws" data-ws="4">4</span><span class="ws" data-ws="5">5</span>
+      </div>
+      <div id="clock"></div>
+      <div class="side">
+        <svg viewBox="0 0 16 16"><path d="M1.5 6a9.5 9.5 0 0 1 13 0M4 8.7a6 6 0 0 1 8 0M6.5 11.3a2.4 2.4 0 0 1 3 0"/></svg>
+        <svg viewBox="0 0 16 16"><path d="M2.5 6h3l4-3v10l-4-3h-3zM12 5.5a3.5 3.5 0 0 1 0 5"/></svg>
+        <svg viewBox="0 0 16 16"><rect x="1.5" y="4.5" width="11.5" height="7"/><path d="M14.5 7v2"/><path d="M3.5 6.5h6v3h-6z" fill="currentColor"/></svg>
+        <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="5.5"/><path d="M8 2.5v5.5"/></svg>
+      </div>
+    </div>
+
+    <div class="win on" id="nvim" style="left:1010px;top:38px;width:898px;height:500px"><div class="body"><div class="code" id="code"></div><div class="status"><span class="mode">NORMAL</span><span class="file">gilt-preview.ts</span><span class="fill"></span><span class="pos">13:1</span><span class="time" id="nvtime"></span></div></div></div>
+    <div class="win" id="term" style="left:740px;top:550px;width:560px;height:518px"><div class="body" id="ls"></div></div>
+    <div class="win" id="palette" style="left:1312px;top:550px;width:596px;height:518px"><div class="body" id="pal"></div></div>
+
+    <div id="lock">
+      <div class="ring"></div>
+      <div class="corner tl"></div><div class="corner tr"></div><div class="corner bl"></div><div class="corner br"></div>
+      <div class="inner">
+        <img src="/unlock.png" alt="Omarchy">
+        <div class="field">
+          <svg viewBox="0 0 36 44"><rect x="3" y="18" width="30" height="23" rx="4"/><path d="M9 18v-6a9 9 0 0 1 18 0v6M18 27v6"/></svg>
+          <div class="input" id="dots"></div>
+        </div>
+      </div>
+      <div class="label">PRIVATE SESSION</div>
+    </div>
+  </div>
+</div>
+
+<div id="controls">
+  <span class="title">Gilt</span>
+  <button id="prev" aria-label="Previous wallpaper">‹</button>
+  <span id="wallname"></span>
+  <button id="next" aria-label="Next wallpaper">›</button>
+  <kbd>Super+Ctrl+Space</kbd>
+  <button id="lockbtn">Lock</button>
+  <button id="copy">Copy install</button>
+  <a href="https://github.com/Soleone/omarchy-gilt-theme">GitHub</a>
+</div>
+
+<script>
+const INSTALL = 'omarchy theme install https://github.com/Soleone/omarchy-gilt-theme.git';
+// The same order and names as the theme's README.
+const WALLPAPERS = [
+  ['01-sovereign-estate', 'Sovereign Estate'], ['02-oratory-01', 'Oratory 01'], ['03-oratory-02', 'Oratory 02'],
+  ['04-oratory-03', 'Oratory 03'], ['05-oratory-04', 'Oratory 04'], ['06-oratory-05', 'Oratory 05'], ['07-oratory-06', 'Oratory 06'],
+];
+
+// colors.toml is a flat list of key = "value" lines.
+function parseColors(text) {
+  const colors = {};
+  for (const line of text.split('\n')) {
+    const match = line.match(/^\s*([a-z_]+)\s*=\s*"([^"]*)"/);
+    if (match) colors[match[1]] = match[2];
+  }
+  return colors;
+}
+// Hyprland writes rgba(rrggbbaa); CSS reads #rrggbbaa.
+const hyprColor = (value) => value.replace(/rgba\(([0-9a-f]{8})\)/gi, '#$1');
+function applyColors(colors) {
+  const root = document.documentElement.style;
+  for (const [key, value] of Object.entries(colors)) if (value.startsWith('#')) root.setProperty(`--${key}`, value);
+  if (colors.hyprland_active_border) {
+    const parts = hyprColor(colors.hyprland_active_border).split(/\s+/);
+    const angle = parts.find((part) => part.endsWith('deg')) ?? '0deg';
+    root.setProperty('--active_border', `linear-gradient(${angle}, ${parts.filter((part) => part.startsWith('#')).join(', ')})`);
+  }
+  if (colors.hyprland_inactive_border) root.setProperty('--inactive_border', hyprColor(colors.hyprland_inactive_border));
+}
+
+const CODE = `import { readFile } from "node:fs/promises";
+
+type Jewel = "amethyst" | "lapis" | "jade";
+
+interface Landmark {
+  readonly name: string;
+  jewel: Jewel;
+  elevation: number;
+  illuminated: boolean;
+}
+
+// The estate the first wallpaper shows.
+const sovereignEstate: Landmark = {
+  name: "The Gilt Observatory",
+  jewel: "lapis",
+  elevation: 1_284,
+  illuminated: true,
+};
+
+function traceRoute(landmark: Landmark): string {
+  const state = landmark.illuminated ? "open" : "sealed";
+  return \`\${landmark.name} is \${state} at \${landmark.elevation}m\`;
+}`;
+const KEYWORDS = new Set(['import', 'from', 'type', 'interface', 'readonly', 'const', 'function', 'return', 'async', 'await', 'true', 'false']);
+const TYPES = new Set(['string', 'number', 'boolean']);
+const escape = (text) => text.replace(/[&<>]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[char]);
+function highlight(line) {
+  const tokens = /(\/\/.*$)|("[^"]*"|`[^`]*`)|(\b\d[\d_]*\b)|([A-Za-z_]\w*)(\s*\()?|([{}()[\];:,.|=?<>])/g;
+  let html = '';
+  let last = 0;
+  for (const match of line.matchAll(tokens)) {
+    html += escape(line.slice(last, match.index));
+    last = match.index + match[0].length;
+    const [text, comment, string, number, word, call, punctuation] = match;
+    const after = line.slice(last);
+    let cls = '';
+    if (comment) cls = 'com';
+    else if (string) cls = 'str';
+    else if (number) cls = 'num';
+    else if (punctuation) cls = 'pun';
+    else if (KEYWORDS.has(word)) cls = 'kw';
+    else if (call) { html += `<span class="fn">${word}</span>${escape(call)}`; continue; }
+    else if (/^[A-Z]/.test(word) || TYPES.has(word)) cls = 'ty';
+    else if (/^\s*:/.test(after) || line.slice(0, match.index).trimEnd().endsWith('.')) cls = 'prop';
+    html += cls ? `<span class="${cls}">${escape(text)}</span>` : escape(text);
+  }
+  return html + escape(line.slice(last));
+}
+function renderCode() {
+  const lines = CODE.split('\n');
+  const current = 13;
+  document.getElementById('code').innerHTML = lines.map((line, index) => {
+    const number = index + 1 === current ? index + 1 : Math.abs(index + 1 - current);
+    const body = index + 1 === current ? `<span class="cursor">${escape(line[0] ?? ' ')}</span>${highlight(line.slice(1))}` : highlight(line);
+    return `<div class="ln${index + 1 === current ? ' cur' : ''}"><span class="n">${number}</span><span>${body || ' '}</span></div>`;
+  }).join('');
+}
+
+function renderTerminal() {
+  const prompt = '<span class="seg path">…/themes/gilt</span><span class="seg git"> main </span> ';
+  const rows = [
+    ['drwxr-xr-x', '-', 'Oct 12', 'backgrounds', 'dir'],
+    ['.rw-r--r--', '916', 'Oct 12', 'colors.toml', ''],
+    ['.rw-r--r--', '12', 'Oct 12', 'icons.theme', ''],
+    ['.rw-r--r--', '1.1k', 'Oct 12', 'LICENSE', ''],
+    ['.rw-r--r--', '5.4k', 'Oct 12', 'palette.svg', ''],
+    ['.rw-r--r--', '254k', 'Oct 12', 'preview-unlock.png', ''],
+    ['.rw-r--r--', '3.9k', 'Oct 12', 'README.md', 'readme'],
+    ['.rw-r--r--', '4.0k', 'Oct 12', 'unlock.png', ''],
+  ];
+  const perms = (text) => [...text].map((char) => {
+    const cls = { d: 'c-blue b', r: 'c-yellow', w: 'c-red', x: 'c-green' }[char];
+    return cls ? `<span class="${cls}">${char}</span>` : `<span class="c-muted">${char}</span>`;
+  }).join('');
+  const listing = rows.map(([mode, size, date, name, kind]) =>
+    `${perms(mode)} <span class="c-green">${size.padStart(5)}</span> <span class="c-yellow b">gilt</span> <span class="c-blue">${date} 22:31</span> ` +
+    (kind === 'dir' ? `<span class="c-blue b">${name}</span>` : kind === 'readme' ? `<span class="c-yellow b" style="text-decoration:underline">${name}</span>` : name)).join('\n');
+  document.getElementById('ls').innerHTML = `${prompt}omarchy theme set gilt\n<span class="c-green">✓</span> Theme set to <span class="c-yellow b">gilt</span>\n\n${prompt}ls -l\n${listing}\n\n${prompt}<span class="cursor"> </span>`;
+}
+
+const MATERIALS = [
+  ['Obsidian', 'background'], ['Raised stone', 'lighter_background'], ['Parchment', 'foreground'], ['Bright ivory', 'bright_foreground'],
+  ['Sovereign gold', 'accent'], ['Gold in shadow', 'selection'], ['Dusty taupe', 'muted'], ['Bronze', 'brown'],
+  ['Oxblood', 'red'], ['Copper', 'orange'], ['Jade', 'green'], ['Verdigris', 'cyan'],
+  ['Lapis', 'blue'], ['Amethyst', 'magenta'], ['Light lapis', 'bright_blue'], ['Light jade', 'bright_green'],
+];
+function renderPalette(colors) {
+  const prompt = '<span class="seg path">~</span> ';
+  const cells = MATERIALS.map(([name, key]) => `<div class="sw"><i style="background:var(--${key})"></i><span>${name}<small>${(colors[key] ?? '').toUpperCase()}</small></span></div>`).join('');
+  document.getElementById('pal').innerHTML = `${prompt}cat colors.toml | gilt-swatches\n<div class="swatches">${cells}</div>`;
+}
+
+// Wallpapers crossfade between two layers, like swaybg after omarchy theme bg next.
+let wallIndex = 0;
+let front = document.getElementById('wallA');
+let back = document.getElementById('wallB');
+const wallUrl = (index) => `/preview/backgrounds/${WALLPAPERS[index][0]}.webp`;
+function showWallpaper(index, immediate = false) {
+  wallIndex = (index + WALLPAPERS.length) % WALLPAPERS.length;
+  document.getElementById('wallname').textContent = `${WALLPAPERS[wallIndex][0].slice(0, 2)} ${WALLPAPERS[wallIndex][1]}`;
+  const url = wallUrl(wallIndex);
+  const image = new Image();
+  image.onload = () => {
+    if (immediate) { front.style.backgroundImage = `url(${url})`; return; }
+    back.style.backgroundImage = `url(${url})`;
+    back.style.opacity = 1;
+    front.style.opacity = 0;
+    [front, back] = [back, front];
+    new Image().src = wallUrl((wallIndex + 1) % WALLPAPERS.length);
+  };
+  image.src = url;
+}
+
+function focusWindow(id) {
+  for (const win of document.querySelectorAll('.win')) win.classList.toggle('on', win.id === id);
+}
+
+let lockTimer;
+function setLocked(locked) {
+  document.getElementById('lock').classList.toggle('on', locked);
+  clearInterval(lockTimer);
+  const dots = document.getElementById('dots');
+  dots.innerHTML = '';
+  if (locked) lockTimer = setInterval(() => { dots.innerHTML = dots.children.length >= 6 ? '' : dots.innerHTML + '<i></i>'; }, 380);
+}
+
+function tick() {
+  const now = new Date();
+  const day = now.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
+  const time = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+  document.getElementById('clock').textContent = `${day} ${time}`;
+  document.getElementById('nvtime').textContent = time;
+}
+
+function fit() {
+  const viewport = document.getElementById('viewport').getBoundingClientRect();
+  const scale = Math.min(viewport.width / 1920, viewport.height / 1080);
+  document.getElementById('stage').style.transform = `translate(-50%, -50%) scale(${scale})`;
+}
+
+async function start() {
+  let colors = {};
+  try {
+    colors = parseColors(await (await fetch('/colors.toml')).text());
+    applyColors(colors);
+  } catch {
+    // The fallback colors in the stylesheet match colors.toml at the time of writing.
+  }
+  renderCode();
+  renderTerminal();
+  renderPalette(Object.fromEntries(MATERIALS.map(([, key]) => [key, colors[key] ?? getComputedStyle(document.documentElement).getPropertyValue(`--${key}`).trim()])));
+  showWallpaper(0, true);
+  tick();
+  setInterval(tick, 10_000);
+  fit();
+  window.addEventListener('resize', fit);
+  for (const win of document.querySelectorAll('.win')) win.addEventListener('mousedown', () => focusWindow(win.id));
+  for (const ws of document.querySelectorAll('.ws')) ws.addEventListener('click', () => {
+    for (const other of document.querySelectorAll('.ws')) other.classList.toggle('on', other === ws);
+  });
+  document.getElementById('next').addEventListener('click', () => showWallpaper(wallIndex + 1));
+  document.getElementById('prev').addEventListener('click', () => showWallpaper(wallIndex - 1));
+  document.getElementById('lockbtn').addEventListener('click', () => setLocked(true));
+  document.getElementById('lock').addEventListener('click', () => setLocked(false));
+  document.getElementById('copy').addEventListener('click', async (event) => {
+    try { await navigator.clipboard.writeText(INSTALL); event.target.textContent = 'Copied'; }
+    catch { event.target.textContent = 'Copy failed'; }
+    setTimeout(() => { event.target.textContent = 'Copy install'; }, 1600);
+  });
+  document.addEventListener('keydown', (event) => {
+    if (document.getElementById('lock').classList.contains('on')) { if (event.key === 'Enter' || event.key === 'Escape') setLocked(false); return; }
+    if (event.key === ' ' && event.ctrlKey) { event.preventDefault(); showWallpaper(wallIndex + 1); }
+    else if (event.key === 'ArrowRight') showWallpaper(wallIndex + 1);
+    else if (event.key === 'ArrowLeft') showWallpaper(wallIndex - 1);
+  });
+  // Hooks for preview/capture.mjs.
+  window.gilt = { showWallpaper, focusWindow, setLocked };
+  window.giltReady = true;
+}
+start();
+</script>
+</body>
+</html>

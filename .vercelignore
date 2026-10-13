@@ -1,0 +1,7 @@
+# Only the preview page and what it reads are deployed.
+/*
+!/preview
+!/colors.toml
+!/unlock.png
+!/vercel.json
+/preview/*.mjs

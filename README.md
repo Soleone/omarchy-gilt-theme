@@ -4,6 +4,8 @@ A dark Omarchy theme of cool obsidian, warm parchment, sovereign gold, and restr
 
 ![Gilt desktop screenshot](screenshot.png)
 
+**[Preview it in your browser](https://gilt.soleone.xyz)**: the palette on a mock Omarchy desktop, all seven wallpapers and the unlock screen.
+
 Black stone and charcoal architecture, with parchment and ivory lettering kept clear against the dark. Accented by gold metalwork, with copper, jade, verdigris, lapis, amethyst, and bronze as quieter selective touches.
 
 ![Gilt preview](preview.png)
